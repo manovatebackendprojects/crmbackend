@@ -19,7 +19,9 @@ INSTALLED_APPS = [
 
     # local apps
     'crmapp',
-    'calendar_module'
+    'calendar_module',
+    'rest_framework',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -37,6 +39,21 @@ ROOT_URLCONF = 'crmbackend.urls'
 
 DB_ENGINE = os.getenv('DB_ENGINE', '')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DRF + OpenAPI (drf-spectacular)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'CRM API',
+    'DESCRIPTION': 'CRM API schema',
+    'VERSION': '1.0.0',
+}
 
 if DB_ENGINE in ('django.db.backends.postgresql', 'postgresql', 'postgres'):
     DATABASES = {
