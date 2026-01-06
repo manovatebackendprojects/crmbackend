@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     
     'authentication',
     
-    'calendar_app',
+    'calendar_module'
+    
     
 ] 
 
@@ -42,6 +43,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'crmbackend.urls'
 
 DB_ENGINE = os.getenv('DB_ENGINE', '')
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if DB_ENGINE in ('django.db.backends.postgresql', 'postgresql', 'postgres'):
     DATABASES = {

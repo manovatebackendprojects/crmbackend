@@ -13,7 +13,7 @@ urlpatterns = [
     #path('api/leads/', include('leads.urls')),
     #path('api/deals/', include('deals.urls')),
     #path('api/tasks/', include('tasks.urls')),
-    path('api/calendar/', include('calendar_app.urls')),
+    path('api/calendar/', include('calendar_module.urls')),
     #path('api/dashboard/', include('dashboard.urls')),
 
 # Swagger URLs
