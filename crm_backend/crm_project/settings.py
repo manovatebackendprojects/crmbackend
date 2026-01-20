@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'deals',
     'task',
     'dashboard',
+    'calendar_module',
+    'crmapp',
 ]
 
 MIDDLEWARE = [
