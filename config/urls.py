@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 URL configuration for config project.
 
@@ -23,3 +24,15 @@ urlpatterns = [
     path('api/auth/', include('apps.authentication.urls')),
 ]
 
+=======
+from django.contrib import admin
+from django.urls import path, include
+from django.urls import path, include
+
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/leads/", include("leads.urls")),
+    path("api/tasks/", include("tasks.urls")),
+]
+>>>>>>> a1bce15f9bbd5e24103d3767b036c122fb3d5b86

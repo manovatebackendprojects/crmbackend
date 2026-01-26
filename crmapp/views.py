@@ -17,7 +17,6 @@ from django.conf import settings
 from google.auth.exceptions import GoogleAuthError
 
 
-
 class SignupAPIView(APIView):
 
     @extend_schema(request=SignupSerializer, tags=["Authentication"])
