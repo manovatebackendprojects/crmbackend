@@ -143,8 +143,37 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'CRM API',
-    'DESCRIPTION': 'CRM API schema',
+    'DESCRIPTION': 'Comprehensive CRM API with authentication, leads, tasks, and calendar management',
     'VERSION': '1.0.0',
+    'SERVERS': [
+        {
+            'url': 'http://localhost:8000',
+            'description': 'Development server',
+        },
+        {
+            'url': 'https://your-production-domain.com',
+            'description': 'Production server',
+        },
+    ],
+    'TAGS': [
+        {
+            'name': 'Authentication',
+            'description': 'User signup, login, and Google OAuth authentication',
+        },
+        {
+            'name': 'Leads',
+            'description': 'Lead management - create and list leads',
+        },
+        {
+            'name': 'Tasks',
+            'description': 'Task management - create and list tasks',
+        },
+        {
+            'name': 'Calendar',
+            'description': 'Calendar events, recurring events, and reminders',
+        },
+    ],
+    'SORT_OPERATIONIDS_BY_OPERATION_ID': True,
 }
 
 

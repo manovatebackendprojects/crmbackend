@@ -18,8 +18,12 @@ from google.auth.exceptions import GoogleAuthError
 
 
 class SignupAPIView(APIView):
+    """
+    User registration endpoint.
+    Create a new user account with email and password.
+    """
 
-    @extend_schema(request=SignupSerializer, tags=["Authentication"])
+    @extend_schema(request=SignupSerializer, tags=["Authentication"], description="Register a new user")
     def post(self, request):
         serializer = SignupSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -32,8 +36,12 @@ class SignupAPIView(APIView):
 
 
 class LoginAPIView(APIView):
+    """
+    User login endpoint.
+    Authenticate user with email and password to receive JWT tokens.
+    """
 
-    @extend_schema(request=LoginSerializer, tags=["Authentication"])
+    @extend_schema(request=LoginSerializer, tags=["Authentication"], description="Login with email and password")
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -78,7 +86,12 @@ class LoginAPIView(APIView):
 GOOGLE_CLIENT_ID = "716629866713-sdb355kgro0uh3pm4o1r3jlmcssohgab.apps.googleusercontent.com"
 
 class GoogleLoginAPIView(APIView):
+    """
+    Google OAuth login endpoint.
+    Authenticate user with Google ID token.
+    """
 
+    @extend_schema(tags=["Authentication"], description="Login with Google OAuth token")
     def post(self, request):
         token = request.data.get("id_token")
         if not token:

@@ -2,6 +2,7 @@ from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from drf_spectacular.utils import extend_schema
 from django.utils import timezone
 from django.db.models import Q
 from django.utils.dateparse import parse_date
@@ -26,9 +27,12 @@ User = get_user_model()
 # CALENDAR EVENTS
 # ======================================================
 
+@extend_schema(tags=["Calendar"])
 class CalendarEventViewSet(viewsets.ModelViewSet):
     """
-    Unified ViewSet for Events / Tasks / Meetings
+    Unified ViewSet for Events / Tasks / Meetings.
+    
+    Manage calendar events with full CRUD operations.
     """
 
     permission_classes = [IsAuthenticated]
@@ -216,7 +220,11 @@ class CalendarEventViewSet(viewsets.ModelViewSet):
 # RECURRING EVENTS
 # ======================================================
 
+@extend_schema(tags=["Calendar"])
 class RecurringEventViewSet(viewsets.ModelViewSet):
+    """
+    Manage recurring calendar events.
+    """
     serializer_class = RecurringEventSerializer
     permission_classes = [IsAuthenticated]
 
@@ -230,7 +238,11 @@ class RecurringEventViewSet(viewsets.ModelViewSet):
 # EVENT REMINDERS
 # ======================================================
 
+@extend_schema(tags=["Calendar"])
 class EventReminderViewSet(viewsets.ModelViewSet):
+    """
+    Manage event reminders and notifications.
+    """
     serializer_class = EventReminderSerializer
     permission_classes = [IsAuthenticated]
 
