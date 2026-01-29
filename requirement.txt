@@ -10,3 +10,4 @@ dj-database-url
 drf-spectacular
 psycopg2-binary
 requests
+PyJWT
