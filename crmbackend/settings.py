@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'leads',
     'tasks',
     'calendar_module',
-    'corsheaders',
+   
 ]
 
 
@@ -75,6 +75,7 @@ MIDDLEWARE = [
 
     'allauth.account.middleware.AccountMiddleware',
 ]
+CORS_ALLOW_CREDENTIALS = True
 
 
 # ======================
