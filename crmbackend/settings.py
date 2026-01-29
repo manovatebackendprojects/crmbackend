@@ -66,22 +66,20 @@ INSTALLED_APPS = [
 # ======================
 # MIDDLEWARE
 # ======================
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-'rest_framework_simplejwt.authentication.JWTAuthentication',
-
     'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'allauth.account.middleware.AccountMiddleware',
 ]
+
 CORS_ALLOW_CREDENTIALS = True
 
 
