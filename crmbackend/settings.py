@@ -168,7 +168,7 @@ SPECTACULAR_SETTINGS = {
             'description': 'Development server',
         },
         {
-            'url': 'https://your-production-domain.com',
+            'url': 'https://crmbackend-xgc8.onrender.com/',
             'description': 'Production server',
         },
     ],
