@@ -63,6 +63,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+'rest_framework_simplejwt.authentication.JWTAuthentication',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
 

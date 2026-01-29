@@ -12,3 +12,4 @@ psycopg2-binary
 requests
 PyJWT
 cryptography
+djangorestframework-simplejwt
