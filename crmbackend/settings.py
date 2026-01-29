@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'leads',
     'tasks',
     'calendar_module',
+    'corsheaders',
 ]
 
 
