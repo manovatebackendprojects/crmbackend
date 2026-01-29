@@ -93,14 +93,16 @@ WSGI_APPLICATION = 'crmbackend.wsgi.application'
 # ======================
 # DATABASE (Neon / Render)
 # ======================
+# DATABASE (Neon PostgreSQL)
+# ======================
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME"),
-        'USER': os.getenv("DB_USER"),
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': os.getenv("DB_HOST"),
-        'PORT': os.getenv("DB_PORT", "5432"),
+        'NAME': 'neondb',
+        'USER': 'neondb_owner',
+        'PASSWORD': 'npg_lu0aHmk8AIUy',
+        'HOST': 'ep-noisy-dream-ahlq75vd-pooler.c-3.us-east-1.aws.neon.tech',
+        'PORT': '5432',
         'OPTIONS': {
             'sslmode': 'require',
         },

@@ -6,9 +6,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('crmapp.urls')),
     path('api/calendar/', include('calendar_module.urls')),
-    path('api/', include('config.urls')),
-    path('api/', include('leads.urls')),
-    path('api/',include('tasks.urls')),
+    path('api/leads/', include('leads.urls')),
+    path('api/tasks/', include('tasks.urls')),
 
     # OpenAPI schema and Swagger UI
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
