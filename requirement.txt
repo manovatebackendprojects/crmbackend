@@ -1,0 +1,11 @@
+Django>=4.2,<5.0
+djangorestframework
+dj-rest-auth
+django-allauth
+gunicorn
+whitenoise
+python-dotenv
+dj-database-url
+drf-spectacular
+psycopg2-binary
+corsheaders
