@@ -1,17 +1,54 @@
 from rest_framework import serializers
-from .models import Lead
+from .models import Lead, LeadNote, LeadActivity
+
+class LeadNoteSerializer(serializers.ModelSerializer):
+    author = serializers.CharField(source='created_by.email', read_only=True)
+    date = serializers.DateTimeField(source='created_at', read_only=True)
+    
+    class Meta:
+        model = LeadNote
+        fields = ['id', 'text', 'author', 'date']
+        read_only_fields = ['id', 'author', 'date']
+
+
+class LeadActivitySerializer(serializers.ModelSerializer):
+    created_by_email = serializers.CharField(source='created_by.email', read_only=True)
+    
+    class Meta:
+        model = LeadActivity
+        fields = ['id', 'activity_type', 'description', 'activity_date', 'created_by_email', 'created_at']
+        read_only_fields = ['id', 'created_by_email', 'created_at']
+
 
 class LeadSerializer(serializers.ModelSerializer):
+    lead_notes = LeadNoteSerializer(many=True, read_only=True)
+    activities = LeadActivitySerializer(many=True, read_only=True)
+    owner_email = serializers.CharField(source='owner.email', read_only=True)
+    
     class Meta:
         model = Lead
-        fields = "__all__"
+        fields = [
+            'id', 'name', 'email', 'phone', 'company', 'position',
+            'stage', 'status', 'source', 'value', 'notes', 'image',
+            'owner', 'owner_email', 'created_at', 'updated_at',
+            'lead_notes', 'activities'
+        ]
+        read_only_fields = ['id', 'owner', 'owner_email', 'created_at', 'updated_at']
+    
+    def create(self, validated_data):
+        # Set owner from request context
+        validated_data['owner'] = self.context['request'].user
+        return super().create(validated_data)
 
-    def validate_email(self, value):
-        if Lead.objects.filter(email=value).exists():
-            raise serializers.ValidationError("Lead with this email already exists.")
-        return value
 
-    def validate_phone(self, value):
-        if not value.isdigit() or len(value) != 10:
-            raise serializers.ValidationError("Phone number must be exactly 10 digits.")
-        return value
+class LeadListSerializer(serializers.ModelSerializer):
+    """Lighter serializer for list views"""
+    owner_email = serializers.CharField(source='owner.email', read_only=True)
+    
+    class Meta:
+        model = Lead
+        fields = [
+            'id', 'name', 'email', 'phone', 'company', 'position',
+            'stage', 'status', 'source', 'value', 'owner_email', 'created_at'
+        ]
+        read_only_fields = ['id', 'owner_email', 'created_at']

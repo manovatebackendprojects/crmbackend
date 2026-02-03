@@ -1,8 +1,12 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / '.env')
 
 # ======================
 # CORE SETTINGS
@@ -17,7 +21,14 @@ ALLOWED_HOSTS = os.getenv(
 ).split(",")
 
 SITE_ID = 1
+import os
 
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# For file uploads
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
@@ -55,10 +66,11 @@ INSTALLED_APPS = [
 
     # local apps
     'crmapp',
-    'config',
     'leads',
     'tasks',
-    'calendar_module',
+    'deals',
+    'calendar_events',
+    'dashboard',
    
 ]
 
@@ -93,21 +105,33 @@ WSGI_APPLICATION = 'crmbackend.wsgi.application'
 # ======================
 # DATABASE (Neon / Render)
 # ======================
-# DATABASE (Neon PostgreSQL)
-# ======================
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'neondb',
-        'USER': 'neondb_owner',
-        'PASSWORD': 'npg_lu0aHmk8AIUy',
-        'HOST': 'ep-noisy-dream-ahlq75vd-pooler.c-3.us-east-1.aws.neon.tech',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+# Use dj-database-url to parse DATABASE_URL from environment
+import dj_database_url
+
+# For Render deployment - use environment variable, fallback to local PostgreSQL
+if os.getenv('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+else:
+    # Local development with PostgreSQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME', 'neondb'),
+            'USER': os.getenv('DB_USER', 'neondb_owner'),
+            'PASSWORD': os.getenv('DB_PASSWORD', ''),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '5432'),
+            'OPTIONS': {
+                'sslmode': 'require' if os.getenv('DB_HOST') else 'disable',
+            },
+        }
+    }
 
 
 # ======================
@@ -140,6 +164,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
@@ -156,6 +181,8 @@ CORS_ALLOW_HEADERS = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     "https://crmbackend-xgc8.onrender.com",
+    "http://localhost:5173",
+
 ]
 
 SPECTACULAR_SETTINGS = {
@@ -242,3 +269,10 @@ AUTHENTICATION_BACKENDS = (
 # GOOGLE OAUTH
 # ======================
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+
+# ======================
+# SIMPLE_JWT TOKEN LIFETIME
+# ======================
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+}
