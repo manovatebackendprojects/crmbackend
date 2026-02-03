@@ -17,7 +17,8 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
+    "localhost,127.0.0.1",
+    "https://deploy-preview-12--manovatecrm.netlify.app",
 ).split(",")
 
 SITE_ID = 1
@@ -182,6 +183,7 @@ CORS_ALLOW_HEADERS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://crmbackend-xgc8.onrender.com",
     "http://localhost:5173",
+    "https://deploy-preview-12--manovatecrm.netlify.app/",
 
 ]
 
