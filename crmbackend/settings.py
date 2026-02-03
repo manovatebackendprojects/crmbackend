@@ -174,7 +174,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = os.getenv(
     "CORS_ALLOWED_ORIGINS",
-    "http://localhost:5173,https://deploy-preview-12--manovatecrm.netlify.app",
+    "http://localhost:5173,http://localhost:3000,https://deploy-preview-12--manovatecrm.netlify.app,https://manovatecrm.netlify.app",
 ).split(",")
 
 CORS_ALLOW_HEADERS = [
@@ -191,7 +191,9 @@ CORS_ALLOW_HEADERS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://crmbackend-xgc8.onrender.com",
     "http://localhost:5173",
+    "http://localhost:3000",
     "https://deploy-preview-12--manovatecrm.netlify.app",
+    "https://manovatecrm.netlify.app",
 ]
 
 SPECTACULAR_SETTINGS = {
