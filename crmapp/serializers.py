@@ -4,6 +4,7 @@ from django.db import IntegrityError
 
 
 class SignupSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
     password = serializers.CharField(write_only=True, min_length=8)
     full_name = serializers.CharField(write_only=True, required=False, allow_blank=True)
 
@@ -17,6 +18,10 @@ class SignupSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
+        email = validated_data.get("email")
+        if not email:
+            raise serializers.ValidationError({"email": ["Email is required."]})
+
         full_name = validated_data.pop("full_name", "").strip()
         first_name = ""
         last_name = ""
@@ -27,8 +32,8 @@ class SignupSerializer(serializers.ModelSerializer):
 
         try:
             user = User.objects.create_user(
-                username=validated_data["email"],  # 👈 email as username
-                email=validated_data["email"],
+                username=email,
+                email=email,
                 password=validated_data["password"],
                 first_name=first_name,
                 last_name=last_name,
