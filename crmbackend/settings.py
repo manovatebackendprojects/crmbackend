@@ -17,8 +17,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
-    "localhost,127.0.0.1",
-    "https://deploy-preview-12--manovatecrm.netlify.app",
+    "localhost,127.0.0.1,crmbackend-xgc8.onrender.com",
 ).split(",")
 
 SITE_ID = 1
@@ -166,8 +165,12 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = os.getenv(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:5173,https://deploy-preview-12--manovatecrm.netlify.app",
+).split(",")
 
 CORS_ALLOW_HEADERS = [
     'accept',
@@ -183,8 +186,7 @@ CORS_ALLOW_HEADERS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://crmbackend-xgc8.onrender.com",
     "http://localhost:5173",
-    "https://deploy-preview-12--manovatecrm.netlify.app/",
-
+    "https://deploy-preview-12--manovatecrm.netlify.app",
 ]
 
 SPECTACULAR_SETTINGS = {
