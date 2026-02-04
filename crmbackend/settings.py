@@ -19,7 +19,7 @@ allowed_hosts_env = os.getenv("ALLOWED_HOSTS", "").strip()
 if allowed_hosts_env:
     ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_env.split(",") if h.strip()]
 else:
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1", "crmbackend-xgc8.onrender.com"]
+    ALLOWED_HOSTS = ["localhost", "127.0.0.1", "crmbackend-xgc8.onrender.com","manovatecrm.netlify.app"]
 
 render_hostname = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if render_hostname and render_hostname not in ALLOWED_HOSTS:
