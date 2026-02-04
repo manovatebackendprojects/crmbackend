@@ -36,12 +36,7 @@ class SignupAPIView(APIView):
 
 
 class LoginAPIView(APIView):
-    """
-    User login endpoint.
-    Authenticate user with email and password to receive JWT tokens.
-    """
-
-    @extend_schema(request=LoginSerializer, tags=["Authentication"], description="Login with email and password")
+    @extend_schema(request=LoginSerializer, tags=["Authentication"])
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -49,15 +44,15 @@ class LoginAPIView(APIView):
         email = serializer.validated_data["email"]
         password = serializer.validated_data["password"]
 
-        try:
-            user_obj = User.objects.get(email=email)
-        except User.DoesNotExist:
+        user_obj = User.objects.filter(email=email).first()
+        if not user_obj:
             return Response(
                 {"detail": "Invalid credentials"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
         user = authenticate(
+            request=request,
             username=user_obj.username,
             password=password
         )
@@ -82,6 +77,7 @@ class LoginAPIView(APIView):
             },
             status=status.HTTP_200_OK
         )
+
 
 GOOGLE_CLIENT_ID = "716629866713-sdb355kgro0uh3pm4o1r3jlmcssohgab.apps.googleusercontent.com"
 
