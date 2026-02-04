@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.db import DatabaseError
+from django.db.models import Q
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,6 +17,10 @@ from .serializers import SignupSerializer, LoginSerializer
 
 from django.conf import settings
 from google.auth.exceptions import GoogleAuthError
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class SignupAPIView(APIView):
@@ -44,7 +50,17 @@ class LoginAPIView(APIView):
         email = serializer.validated_data["email"]
         password = serializer.validated_data["password"]
 
-        user_obj = User.objects.filter(email=email).first()
+        try:
+            user_obj = User.objects.filter(
+                Q(email__iexact=email) | Q(username__iexact=email)
+            ).first()
+        except DatabaseError:
+            logger.exception("Database error while looking up user for login")
+            return Response(
+                {"detail": "Login unavailable. Please try again later."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+
         if not user_obj:
             return Response(
                 {"detail": "Invalid credentials"},
@@ -63,7 +79,14 @@ class LoginAPIView(APIView):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
-        refresh = RefreshToken.for_user(user)
+        try:
+            refresh = RefreshToken.for_user(user)
+        except Exception:
+            logger.exception("Token generation failed during login")
+            return Response(
+                {"detail": "Login failed. Please try again later."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
         return Response(
             {
