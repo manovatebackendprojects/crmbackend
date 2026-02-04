@@ -19,7 +19,13 @@ allowed_hosts_env = os.getenv("ALLOWED_HOSTS", "").strip()
 if allowed_hosts_env:
     ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_env.split(",") if h.strip()]
 else:
-    ALLOWED_HOSTS = ["localhost", "127.0.0.1", "crmbackend-xgc8.onrender.com","manovatecrm.netlify.app"]
+    ALLOWED_HOSTS = [
+        "localhost",
+        "127.0.0.1",
+        "crmbackend-xgc8.onrender.com",
+        "manovatecrm.netlify.app",
+        "crm-backend-prod.eba-u6tu4mfm.us-west-2.elasticbeanstalk.com",
+    ]
 
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
@@ -193,6 +199,8 @@ CORS_ALLOW_HEADERS = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     "https://crmbackend-xgc8.onrender.com",
+    "https://crm-backend-prod.eba-u6tu4mfm.us-west-2.elasticbeanstalk.com",
+    "http://crm-backend-prod.eba-u6tu4mfm.us-west-2.elasticbeanstalk.com",
     "http://localhost:5173",
     "http://localhost:3000",
     "https://deploy-preview-12--manovatecrm.netlify.app",
