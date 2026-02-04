@@ -33,10 +33,28 @@ class SignupAPIView(APIView):
     def post(self, request):
         serializer = SignupSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        user = serializer.save()
+
+        try:
+            refresh = RefreshToken.for_user(user)
+        except Exception as e:
+            logger.exception("Token generation failed during signup")
+            return Response(
+                {"detail": "Signup successful but token generation failed. Please login."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
         return Response(
-            {"detail": "User registered successfully"},
+            {
+                "detail": "User registered successfully",
+                "access": str(refresh.access_token),
+                "refresh": str(refresh),
+                "user": {
+                    "id": user.id,
+                    "email": user.email,
+                    "role": "Admin" if user.is_superuser else "User",
+                },
+            },
             status=status.HTTP_201_CREATED
         )
 
