@@ -37,6 +37,7 @@ class SignupAPIView(APIView):
 
         try:
             refresh = RefreshToken.for_user(user)
+            logger.info(f"Token generated for user {user.email}")
         except Exception as e:
             logger.exception("Token generation failed during signup")
             return Response(
