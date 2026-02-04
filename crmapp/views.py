@@ -32,7 +32,9 @@ class SignupAPIView(APIView):
     @extend_schema(request=SignupSerializer, tags=["Authentication"], description="Register a new user")
     def post(self, request):
         serializer = SignupSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        if not serializer.is_valid():
+            logger.warning("Signup validation failed", extra={"errors": serializer.errors})
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         user = serializer.save()
 
         try:
