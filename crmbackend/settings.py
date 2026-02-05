@@ -26,6 +26,7 @@ else:
         "manovatecrm.netlify.app",
         "crm-backend-prod.eba-u6tu4mfm.us-west-2.elasticbeanstalk.com",
         "crmbackend-production-dc4a.up.railway.app",
+        "prismatic-swan-7f1254.netlify.app",
     ]
 
 if DEBUG:
@@ -184,7 +185,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = os.getenv(
     "CORS_ALLOWED_ORIGINS",
-    "http://localhost:5173,http://localhost:3000,https://deploy-preview-12--manovatecrm.netlify.app,https://manovatecrm.netlify.app,https://crmbackend-production-dc4a.up.railway.app",
+    "http://localhost:5173,http://localhost:3000,https://deploy-preview-12--manovatecrm.netlify.app,https://manovatecrm.netlify.app,https://crmbackend-production-dc4a.up.railway.app,https://prismatic-swan-7f1254.netlify.app",
 ).split(",")
 
 CORS_ALLOW_HEADERS = [
@@ -207,6 +208,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "https://deploy-preview-12--manovatecrm.netlify.app",
     "https://manovatecrm.netlify.app",
+    "https://prismatic-swan-7f1254.netlify.app",
 ]
 
 SPECTACULAR_SETTINGS = {
