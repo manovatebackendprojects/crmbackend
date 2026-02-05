@@ -3,6 +3,9 @@ from .views import SignupAPIView, LoginAPIView, GoogleLoginAPIView
 
 urlpatterns = [
     path("signup/", SignupAPIView.as_view()),
+    path("signup", SignupAPIView.as_view()),
     path("login/", LoginAPIView.as_view()),
+    path("login", LoginAPIView.as_view()),
     path("auth/google/", GoogleLoginAPIView.as_view()),
+    path("auth/google", GoogleLoginAPIView.as_view()),
 ]
